@@ -1,0 +1,21 @@
+{
+  "version": "1.7.5",
+  "compilerOptions": {
+    "target": "es5",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "removeComments": false,
+    "noImplicitAny": true,
+    "sourceMap": true,
+    "declaration": true,
+    "module": "system",
+    "diagnostics": true,
+    "rootDir": "./app/scripts_ts",
+    "outDir": "./app/scripts"
+  },
+  "exclude": [
+    "app/jspm_packages",
+    "node_modules",
+    "app-ng2"
+  ]
+}

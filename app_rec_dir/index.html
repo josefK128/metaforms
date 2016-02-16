@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8" />
+    <title>node-webkit producers & recursive structural directives</title>
+    <meta name="description" content="nw-producer" />
+    <script src="../socket.io.js"></script>
+
+    <!-- npm -->
+    <script src="../node_modules/angular/angular.js"></script>
+    <script src="../node_modules/angular-ui-router/build/angular-ui-router.js"></script>
+    <script src="../node_modules/systemjs/dist/system.js"></script>
+    <script src="../node_modules/async/dist/async.js"></script>
+
+    <!-- system.js config.js -->
+    <script src="./config.js"></script>
+  </head>
+
+  <body>
+  <div><h2 id='display'>webkit producer waiting...</h2></div>
+  <div class="close" ></div>
+  <narrative style='background:transparent' ></narrative>
+  <div class="close" ></div>
+  <div id="narrative" ng-controller="narrative" style='background:transparent'  >
+    <collection id="model"  collection="tasks" ></collection>
+  </div>
+
+
+  <!-- scripts -->
+  <script src="../node_modules/angular/angular.js"></script>
+  <!-- <script src="../node_modules/angular2/upgrade.js"></script> -->
+  <script src="./libs/mutation-summary/mutation-summary.js"></script>
+  <script src="./libs/traceur-runtime/traceur-runtime.js"></script> 
+  <script src="./build/app.js"> </script>
+
+
+  <!-- bootstrap angular app -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function(){
+      angular.bootstrap(document, ['app']);
+    });
+  </script>
+
+  <script>
+    // hostG/portG is host/port of genotype-service
+    // hostL/portL is host/port of log-service
+    var hostG = process.env.HOSTG || 'localhost',
+        portG = process.env.PORTG || 8080,
+        hostL = process.env.HOSTL || 'localhost',
+        portL = process.env.PORTL || 8082,
+        g_url = 'http://' + hostG + ':' + portG,
+        l_url = 'http://' + hostL + ':' + portL,
+        webkit_socket = io(g_url),
+        node_socket = require('socket.io-client').connect(g_url),
+        log = require('socket.io-client').connect(l_url),
+        axiom1 = JSON.stringify({ axiom: [4,6],
+             g_rule: '+',
+             p_rule: .5 }),
+        axiom2 = JSON.stringify({ axiom: [5,7],
+             g_rule: '*',
+             p_rule: 2.0 }),
+        t = function(){
+          return (new Date().toJSON()).replace(/^.*T/, '').replace(/Z/, '');
+        },
+        display = document.getElementById('display'),
+        wk_msg,
+        n_msg;
+
+
+    // webkit axiom-producer channel 'p' msg event-handler
+    webkit_socket.on('p', function(_reply){
+      async.series([
+        function(){
+          var reply = _reply;
+          wk_msg = reply;
+          console.log(`@@@ app-webkit received reply = ${reply}`);
+          display.innerHTML = reply;
+          reply = `<${t()}> @@@ app-webkit received reply = ${reply}`;
+          log.emit('log', reply);
+        }],
+        function(error){
+          wk_msg = `<${t()}> ${wk_msg} generated app-rec-dir-webkit error = ${error}`;
+          log.emit('log', wk_msg);
+        }
+      ); // series
+    });
+
+    // node axiom-producer channel 'p' msg event-handler
+    node_socket.on("p", function(_resp){
+      async.series([
+        function(){
+          var resp = _resp;
+          n_msg = resp;
+          console.log(`@@@ app-node received resp = ${resp}`);
+          display.innerHTML = resp;
+          resp = `<${t()}> @@@ app-node received resp = ${resp}`;
+          log.emit('log', resp);
+        }],
+        function(error){
+          n_msg = `<${t()}> ${n_msg} generated app-rec-dir-node error = ${error}`;
+          log.emit('log', n_msg);
+        }
+      ); // series
+    });
+
+    // webkit axiom-production cycle
+    setInterval(function(){
+      var msg;
+      console.log(`\n\n @@@ app-webkit sent to genotype msg = ${axiom1}`);
+      webkit_socket.emit('a', axiom1);
+      msg = `<${t()}> @@@ app-webkit sent to genotype msg = ${axiom1}`;
+      log.emit('log', msg);
+    }, 10000);
+        
+    // node axiom-production cycle
+    setTimeout(function(){
+      var msg;
+      setInterval(function(){
+        console.log(`\n\n @@@ app-node sent to genotype msg ${axiom2}`);
+        node_socket.emit('a', axiom2);
+        msg = `<${t()}> @@@ app-node sent to genotype msg = ${axiom2}`;
+        log.emit('log', msg);
+      }, 10000);
+    },5000);
+  </script>
+  </body>
+
+</html>
+

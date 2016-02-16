@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>g-service.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="..\docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>g-service.js</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <p>g-service.js 
+client of genotype-service</p>
+<p>Genotype connects to Phenotype via p-service socket on channel ‘g’
+Producer creates g-service which connects to Genotype on channel ‘a’
+Producer passes self-reference in to initialize method of g-service
+Genotype collects g-service subscribers (client sockets) on connection
+Producer sends axiom on g-service client socket on channel ‘a’ 
+Genotype awaits g-service producer axioms on channel ‘a’
+Genotype transforms axiom to genotype and sends to Phenotype on channel ‘g’
+Phenotype awaits Genotype genotypes on channel ‘g’
+Phenotype transforms genotype to phenotype
+Phenotype sends to subscribers (g-service client sockets) on channel ‘p’
+g-service awaits phenotypes on channel ‘p’
+g-service sends phenotype to Producer ref via Producer.receive(phenotype)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-meta">'use strict'</span>;
+
+
+<span class="hljs-built_in">module</span>.exports = <span class="hljs-class"><span class="hljs-keyword">class</span>  <span class="hljs-title">G</span> </span>{
+  <span class="hljs-keyword">constructor</span>(client, _hostG, _portG) {
+    <span class="hljs-keyword">var</span> hostG = _hostG || <span class="hljs-string">'localhost'</span>,
+        portG = _portG || process.env.PORTG || <span class="hljs-number">8080</span>,
+        url = <span class="hljs-string">`http://<span class="hljs-subst">${hostG}</span>:<span class="hljs-subst">${portG}</span>`</span>;
+
+    <span class="hljs-keyword">this</span>.genotype = <span class="hljs-built_in">require</span>(<span class="hljs-string">'socket.io-client'</span>).connect(url);
+    <span class="hljs-keyword">this</span>.genotype.on(<span class="hljs-string">'p'</span>, (msg) =&gt; {
+      client.receive(msg);
+    });
+  }
+
+  emit(msg){
+    <span class="hljs-keyword">this</span>.genotype.emit(<span class="hljs-string">'a'</span>, msg);
+  }
+} <span class="hljs-comment">// class</span></pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

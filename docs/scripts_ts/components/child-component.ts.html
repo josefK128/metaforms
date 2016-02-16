@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>child-component.ts.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="..\docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>child-component.ts.js</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <p>child-component.ts.js - ts-js mirror for docco</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+
+<span class="hljs-keyword">import</span> {Component, Inject, EventEmitter} <span class="hljs-keyword">from</span> <span class="hljs-string">'ng-forward'</span>;
+<span class="hljs-keyword">import</span> {Nested} <span class="hljs-keyword">from</span> <span class="hljs-string">'./nested-component.ts'</span>;
+<span class="hljs-keyword">import</span> {TestService} <span class="hljs-keyword">from</span> <span class="hljs-string">'../services/test-service.ts'</span>;
+
+
+@Component({
+    selector: <span class="hljs-string">'child'</span>,
+    directives: [Nested],
+    inputs: [<span class="hljs-string">'message1'</span>, <span class="hljs-string">'message2'</span>, <span class="hljs-string">'msg3:message3'</span>],
+    outputs: [<span class="hljs-string">'event1'</span>, <span class="hljs-string">'event2'</span>],
+    template: <span class="hljs-string">`
+        &lt;h2&gt;Child&lt;/h2&gt;
+        &lt;p&gt;ES7 async resolved value: {{ child.num || 'resolving...' }}&lt;/p&gt;
+        &lt;nested&gt;&lt;/nested&gt;
+
+        &lt;h4&gt;Event&lt;/h4&gt;
+        &lt;button (click)="child.triggerEventNormally()"&gt;
+            Trigger DOM Event
+        &lt;/button&gt;
+        &lt;button (click)="child.triggerEventViaEventEmitter()"&gt;
+            Trigger Emitted Event
+        &lt;/button&gt;
+
+        &lt;h4&gt;One Way String from Parent (read-only)&lt;/h4&gt;
+        &lt;p&gt;{{child.msg3}}&lt;/p&gt;
+
+        &lt;h4&gt;One Way Binding from Parent (read-only)&lt;/h4&gt;
+        &lt;input ng-model="child.message1"/&gt;
+
+        &lt;h4&gt;Two Way Binding to/from Parent (read/write)&lt;/h4&gt;
+        &lt;input ng-model="child.message2"/&gt;
+    `</span>
+})
+@Inject(TestService, <span class="hljs-string">'$element'</span>)
+<span class="hljs-keyword">export</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Child</span></span>{
+    public event2 = <span class="hljs-keyword">new</span> EventEmitter();
+  
+    <span class="hljs-keyword">constructor</span>(public TestService, public $element){
+        <span class="hljs-keyword">this</span>.resolveValue();
+    }
+
+    resolveValue(){
+        <span class="hljs-keyword">this</span>.TestService.getValue().then(val =&gt; <span class="hljs-keyword">this</span>.num = val);
+    }
+
+    triggerEventNormally() {
+        <span class="hljs-keyword">this</span>.$element.triggerHandler(<span class="hljs-string">'event1'</span>);
+    }
+
+    triggerEventViaEventEmitter() {
+        <span class="hljs-keyword">this</span>.event2.next()
+    }
+}</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

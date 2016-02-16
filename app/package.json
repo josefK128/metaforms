@@ -1,0 +1,17 @@
+{
+  "name": "mf-app",
+  "version": "1.0.0",
+  "description": "node-webkit producers & ng-forward angular2 interactive ui",
+  "main": "./index.html",
+  "window": {
+    "frame": true,
+    "width": 400,
+    "height": 900,
+    "toolbar": true,
+    "position": "center",
+    "resizable": true
+  },
+  "scripts": {
+    "start": "nw ."
+  }
+}
