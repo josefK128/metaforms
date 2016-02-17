@@ -15,7 +15,7 @@ mf$> ```node index 2000``` runs a producer emit every second
 * [4] can run additional node-webkit producers in
 two applications. These can be run simultaneous with the
 node-only application ([3]), or the node application
-can be run with no 'back-end' producers by using argv[3]=0
+can be run with no 'back-end' producers by using argv[2]=0
 <br>exp: 
 mf$> ```node index 0```  (services only)
 
