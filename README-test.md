@@ -7,7 +7,7 @@ end-to-end tests exercising the actual running services backend
 (genotype-service and phenotype-service)
 
 * to run start the services backend (with no associated producers)
-use argv[2] = '0' which causes no node producers to be created
+use argv[2] = 0 which causes no node producers to be created
 .i.e metaforms$> ```node index 0```
 (Otherwise argv[2] is the producer send period with default 10000ms - see README)
 
