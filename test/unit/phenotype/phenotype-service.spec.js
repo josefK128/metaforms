@@ -33,40 +33,40 @@ var log = require('../../../app/scripts/services/log-service.js'),
     genotype.initialize();
 
 
-describe ("phenotype-service", function(){
-  beforeEach(function(){
+describe ("phenotype-service", () => {
+  beforeEach(() => {
   });
-  afterEach(function(){
+  afterEach(() => {
   });
 
   // existence tests
-  it ("G class is imported", function(){
+  it ("G class is imported", () => {
     expect(G).toBeDefined();
   });
-  it ("g instance is created", function(){
+  it ("g instance is created", () => {
     expect(g).toBeDefined();
   });
-  it ("genotype-mock class is imported", function(){
+  it ("genotype-mock class is imported", () => {
     expect(genotype).toBeDefined();
   });
-  it ("phenotype instance is created", function(){
+  it ("phenotype instance is created", () => {
     expect(phenotype).toBeDefined();
   });
-  it ("g.emit is defined", function(){
+  it ("g.emit is defined", () => {
     expect(g.emit).toBeDefined();
   });
-  it ("client is defined", function(){
+  it ("client is defined", () => {
     expect(client).toBeDefined();
   });
-  it ("client.receive is defined", function(){
+  it ("client.receive is defined", () => {
     expect(client.receive).toBeDefined();
   });
-  it ("client.last_result is defined", function(){
+  it ("client.last_result is defined", () => {
     expect(client.last_result).toBeDefined();
   });
 
   // unit tests
-  it ("Phenotype processes genotype1 correctly", function(){
+  it ("Phenotype processes genotype1 correctly", () => {
     runs(() => {
       g.emit(genotype1);
     });
@@ -79,7 +79,7 @@ describe ("phenotype-service", function(){
       expect(s).toEqual(expect1);
     });
   });
-  it ("Genotype processes genotype2 correctly", function(){
+  it ("Genotype processes genotype2 correctly", () => {
     runs(() => {
       g.emit(genotype2);
     });

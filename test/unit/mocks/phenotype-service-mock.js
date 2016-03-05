@@ -13,7 +13,7 @@ var Rx = require('rx'),
     };
 
   // exercise Rx
-  Rx.Observable.just('\nhello Phenotype Rx').subscribe(function(v){
+  Rx.Observable.just('\nhello Phenotype Rx').subscribe((v) => {
     //console.log(v);
   });
 
@@ -38,13 +38,13 @@ class  Phenotype {
     log = require('socket.io-client').connect(url);
 
     // connection-handler
-    phenotype.on('connection', function (socket) {
+    phenotype.on('connection', (socket) => {
       console.log(`client connected to phenotype index = ${index++}`);
   
       // msg-handler for phenotype - mock is pass-through
-      socket.on('g', function(msg){
+      socket.on('g', (msg) => {
         console.log(`phenotype passing through genotype to all subscribers`);
-        subscribers.forEach(function(c){
+        subscribers.forEach((c) => {
           c.emit('p', msg);
         });
       });

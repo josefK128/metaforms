@@ -13,33 +13,33 @@ var Producer = require('../../../app/scripts/components/producer-component.js'),
     expect2 = '{"axiom":[3,5],"g_rule":"*","p_rule":2,"genotype":15,"phenotype":30}';
 
 
-describe ("producer-component", function(){
-  beforeEach(function(){
+describe ("producer-component", () => {
+  beforeEach(() => {
     producer = new Producer('test');
   });
-  afterEach(function(){
+  afterEach(() => {
     producer = undefined;
   });
 
   // existence tests
-  it ("Producer class is imported", function(){
+  it ("Producer class is imported", () => {
     expect(Producer).toBeDefined();
   });
-  it ("producer instance is created", function(){
+  it ("producer instance is created", () => {
     expect(producer).toBeDefined();
   });
-  it ("Producer name is 'test'", function(){
+  it ("Producer name is 'test'", () => {
     expect(producer.name).toBe("test");
   });
-  it ("Producer creates genotype-service", function(){
+  it ("Producer creates genotype-service", () => {
     expect(producer.g).toBeDefined();
   });
-  it ("Producer creates log-service", function(){
+  it ("Producer creates log-service", () => {
     expect(producer.log).toBeDefined();
   });
 
   // e2e tests
-  it ("Producer processes axiom1 correctly", function(){
+  it ("Producer processes axiom1 correctly", () => {
     runs(() => {
       producer.emit(axiom1);
     });
@@ -52,7 +52,7 @@ describe ("producer-component", function(){
       expect(s).toEqual(expect1);
     });
   });
-  it ("Producer processes axiom2 correctly", function(){
+  it ("Producer processes axiom2 correctly", () => {
     runs(() => {
       producer.emit(axiom2);
     });

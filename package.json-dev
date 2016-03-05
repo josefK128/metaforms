@@ -7,18 +7,7 @@
     "url": "git+https://github.com/josefK128/mf.git"
   },
   "license": "MIT",
-  "main": "app/index.html",
-  "window": {
-    "frame": true,
-    "width": 400,
-    "height": 900,
-    "toolbar": true,
-    "position": "center",
-    "resizable": true,
-    "show": true
-  },
   "scripts": {
-    "start": "nw .",
     "tsd": "tsd reinstall --resolve --overwrite --config tsd.json",
     "tsc": "tsc -rootDir ./app/scripts_ts -outDir ./app/scripts"
   },

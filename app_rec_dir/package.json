@@ -2,7 +2,7 @@
   "name": "mf-app_rec_dir",
   "version": "1.0.0",
   "description": "node-webkit producers & recursive structural directives",
-  "main": "./index.html",
+  "main": "./index_wk_only.html",
   "window": {
     "frame": true,
     "width": 400,

@@ -1,8 +1,8 @@
 {
   "name": "mf-app",
   "version": "1.0.0",
-  "description": "node-webkit producers & ng-forward angular2 interactive ui",
-  "main": "./index.html",
+  "description": "node-webkit producer & ng-forward angular2 interactive ui",
+  "main": "./index_wk_only.html",
   "window": {
     "frame": true,
     "width": 400,
