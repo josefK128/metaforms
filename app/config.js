@@ -11,7 +11,7 @@ System.config({
     // 'ng-forward': '../../../node_modules/ng-forward/ng-forward.dist.js',
     // node_modules contains ng-forward.0.0.1.alpha11 - fails!
     'typescript': '../node_modules/typescript/lib/typescript.js',
-    'mutation-summary': '../../../node_modules/mutation-summary/src/mutation-summary.js'
+    'mutation-summary': '../node_modules/mutation-summary/src/mutation-summary.js'
   },
   paths: {
     narrative: 'scripts_ts/components/narrative.ts'  
